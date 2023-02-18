@@ -1,0 +1,24 @@
+version: '3'
+
+services:
+
+  postgres:
+    image: postgres:13
+    container_name: vape-nest-api-postgres
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=fam
+      - POSTGRES_HOST_AUTH_METHOD=trust
+      - POSTGRES_PORT=5432
+    networks:
+      - backend
+
+networks:
+  backend:
+    driver: "bridge"
+
+volumes:
+  postgres:
