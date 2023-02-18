@@ -1,9 +1,10 @@
-import {MigrationInterface, QueryRunner} from "typeorm";
+import { MigrationInterface, QueryRunner } from "typeorm";
 
 export class FirstMigration1600996521133 implements MigrationInterface {
     name = 'FirstMigration1600996521133'
 
     public async up(queryRunner: QueryRunner): Promise<void> {
+        await queryRunner.query(`CREATE SCHEMA IF NOT EXISTS bcerd`);
         await queryRunner.query(`CREATE TYPE "submission_type_enum" AS ENUM('Sales Report', 'Product Report', 'Manufacturing Report', 'Notice of Intent', 'Location')`);
         await queryRunner.query(`CREATE TABLE "submission" ("id" uuid NOT NULL DEFAULT gen_random_uuid(), "businessId" uuid NOT NULL, "type" "submission_type_enum" NOT NULL, "data" json NOT NULL, "created_at" TIMESTAMP NOT NULL DEFAULT now(), "updated_at" TIMESTAMP NOT NULL DEFAULT now(), CONSTRAINT "PK_7faa571d0e4a7076e85890c9bd0" PRIMARY KEY ("id"))`);
         await queryRunner.query(`CREATE TABLE "noi" ("id" uuid NOT NULL DEFAULT gen_random_uuid(), "created_at" TIMESTAMP NOT NULL DEFAULT now(), "updated_at" TIMESTAMP NOT NULL DEFAULT now(), "businessId" uuid, CONSTRAINT "PK_9a8fbcc2783bf174923c170a7a6" PRIMARY KEY ("id"))`);
